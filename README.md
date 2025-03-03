@@ -1,7 +1,7 @@
 # HRVox
 HRVox is a voice-interactive chatbot designed to streamline HR workflows. 
 
-### Architecture ###
+### Architecture: ###
 ``` mermaid
 
 graph TD
@@ -44,3 +44,17 @@ graph TD
     end
 
 ```
+### Summary of the Flow : ###
+
+* Employee speaks → Audio captured by Web Frontend.
+
+* Audio sent to FastAPI Backend → Transcribed to text (Google Cloud Speech-to-Text).
+
+* Text analyzed for intent (Rasa NLU) → Dialogue managed (Rasa Core) → Agent triggered.
+
+* Agent performs task (queries database or calls API) → Response generated.
+
+* Response converted to audio (Google Cloud Text-to-Speech) → Sent back to Web Frontend.
+
+* Employee hears the response via Audio Playback.
+
