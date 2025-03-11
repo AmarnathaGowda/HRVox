@@ -7,7 +7,7 @@ def transcribe_audio(audio_file):
     audio = speech.RecognitionAudio(content=content)
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=16000,
+        sample_rate_hertz=24000,
         language_code="en-US",
     )
     response = client.recognize(config=config, audio=audio)
@@ -15,4 +15,4 @@ def transcribe_audio(audio_file):
         print(f"Transcript: {result.alternatives[0].transcript}")
 
 if __name__ == "__main__":
-    transcribe_audio("sample_audio.wav")  # Replace with your audio file
+    transcribe_audio("output.wav")  # Replace with your audio file
