@@ -1,0 +1,44 @@
+version: "3.1"
+
+stories:
+
+- story: greet and apply
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: apply_job
+  - action: utter_apply_job
+
+- story: greet and apply leave
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: apply_leave
+  - action: utter_apply_leave
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye

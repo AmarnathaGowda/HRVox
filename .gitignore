@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 postgres/*
 credentials/*
+rasa/models/*
+rasa/.rasa/*
