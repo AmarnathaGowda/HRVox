@@ -16,6 +16,16 @@ stories:
   - intent: apply_leave
   - action: utter_apply_leave
 
+- story: greet ask policy
+  steps:
+  - intent: ask_policy
+  - action: action_get_policy
+
+- story: apply leave
+  steps:
+  - intent: apply_leave
+  - action: action_apply_leave
+
 - story: happy path
   steps:
   - intent: greet

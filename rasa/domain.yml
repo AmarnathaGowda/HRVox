@@ -10,6 +10,11 @@ intents:
   - bot_challenge
   - apply_job
   - apply_leave
+  - ask_policy
+
+actions:
+  - action_get_policy
+  - action_apply_leave
 
 responses:
   utter_greet:
@@ -17,6 +22,9 @@ responses:
 
   utter_apply_job:
     - text: "To apply for a job, please tell me the position you’re interested in!"
+
+  utter_ask_policy_type:
+    - text: "Which policy would you like to know about? (e.g., leave_policy, sick_leave)"
 
   utter_apply_leave:
     - text: "To apply for leave, please provide your leave dates and reason."
@@ -36,6 +44,17 @@ responses:
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+policy_type:
+  type: text
+  mappings:
+    - type: from_entity
+      entity: policy_type
+  influence_conversation: false
+#   leave_dates:
+#     type: text
+#     influence_conversation: false
+
 
 session_config:
   session_expiration_time: 60

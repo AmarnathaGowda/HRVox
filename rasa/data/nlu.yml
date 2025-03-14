@@ -17,6 +17,15 @@ nlu:
     - goodevening
     - good afternoon
 
+
+- intent: ask_policy
+  examples: |
+    - What is the leave policy?
+    - Tell me about the sick leave policy
+    - What’s the company’s leave policy?
+    - Can you explain the leave rules?
+    - How does sick leave work?
+
 - intent: apply_job
   examples: |
     - I want to apply for a job
@@ -28,6 +37,15 @@ nlu:
     - I want to apply for leave
     - Can I take a day off?
     - How do I request leave?
+    - I need to take leave next week
+    - Apply for a vacation day
+
+- intent: ask_policy
+  examples: |
+    - What is the [leave_policy]{"entity": "policy_type"}?
+    - Tell me about [sick_leave]{"entity": "policy_type"}
+
+
 
 - intent: goodbye
   examples: |
