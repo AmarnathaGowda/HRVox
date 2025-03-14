@@ -9,6 +9,13 @@ stories:
   - intent: apply_job
   - action: utter_apply_job
 
+- story: greet and apply leave
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: apply_leave
+  - action: utter_apply_leave
+
 - story: happy path
   steps:
   - intent: greet
