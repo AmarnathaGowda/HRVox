@@ -1,13 +1,10 @@
-from fastapi import FastAPI, UploadFile, File,HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException
 from google.cloud import speech_v1p1beta1 as speech
 import io
-import requests
 
-app = FastAPI(title="HRVox Backend", 
-              description="Backedn for HRVox Chatbot",
-              version="0.1.0")
+app = FastAPI(title="HRVox Backend", description="Backend for HRVox Chatbot", version="0.1.0")
 
-@app.get("/health", summary="Check Server status")
+@app.get("/health", summary="Check server status")
 async def health_check():
     return {"status": "healthy", "message": "HRVox backend is up and running!"}
 
@@ -22,7 +19,7 @@ async def transcribe_audio(audio: UploadFile = File(...)):
         audio = speech.RecognitionAudio(content=audio_content)
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-            sample_rate_hertz=24000,
+            sample_rate_hertz=16000,
             language_code="en-US",
         )
         # Perform transcription
@@ -31,16 +28,6 @@ async def transcribe_audio(audio: UploadFile = File(...)):
         transcript = ""
         for result in response.results:
             transcript += result.alternatives[0].transcript
-
-        # Send transcript to Rasa
-        rasa_response = requests.post(
-            "http://localhost:5005/webhooks/rest/webhook",
-            json={"sender": "user", "message": transcript}
-        ).json()
-
-         # Get Rasa's response
-        rasa_message = rasa_response[0]["text"] if rasa_response else "Sorry, I didn't understand that."
-        return {"transcript": transcript, "response": rasa_message}
-
+        return {"transcript": transcript}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Transcription failed: {str(e)}")
