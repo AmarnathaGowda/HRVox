@@ -1,32 +1,3 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/custom-actions
-
-
-# This is a simple example for a custom action which utters "Hello World!"
-
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message(text="Hello World!")
-#
-#         return []
-
-
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
@@ -38,13 +9,23 @@ import logging
 logger = logging.getLogger(__name__)
 logger.info("Loading actions.py")
 
+DB_CONFIG = {
+    'dbname': 'hrvox_db',
+    'user': 'hrvox_user',
+    'password': 'password',
+    'host': 'localhost',
+    'port': '5432'
+}
+
 class ActionGetPolicy(Action):
     def name(self):
         logger.info("ActionGetPolicy.name() called")
         return "action_get_policy"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain):
-        logger.info("ActionGetPolicy.run() called b")
+       
+        policy_type = tracker.get_slot("policy_type") or "general"
+
         policy_data = {
             "leave_policy": "You are entitled to 20 days of leave per year.",
             "sick_leave": "Sick leave is granted based on medical certification.",
@@ -64,10 +45,34 @@ class ActionGetPolicy(Action):
         else:
             response = policy_data.get(policy_type, "Policy not found.")
             dispatcher.utter_message(text=f"The policy is: {response}")
-      
+
         
+        # try:
+        #     # Connect to the database
+        #     conn = psycopg2.connect(**DB_CONFIG)
+        #     cursor = conn.cursor()
+        #     logger.info("policy_type")
+        #     logger.info(policy_type)
+
+        #     logger.info("SELECT policy_text FROM hr_policies WHERE policy_type = %s", (policy_type,))
+        #     # Query the policy
+
+        #     cursor.execute("SELECT policy_text FROM hr_policies WHERE policy_type = %s", (policy_type,))
+        #     result = cursor.fetchone()
+        #     if result:
+        #         response = result[0]
+        #     else:
+        #         response = "Policy not found."
+        #     # Close the connection
+        #     cursor.close()
+        #     conn.close()
+        # except Exception as e:
+        #     response = f"Error retrieving policy: {str(e)}"
+        # # Send the response
         # dispatcher.utter_message(text=response)
-        return []
+        
+        # # dispatcher.utter_message(text=response)
+        # return []
 
     # def run(self, dispatcher, tracker, domain):
     #     print("Loading actions.py -- action_get_policy")
